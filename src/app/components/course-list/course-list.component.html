@@ -1,0 +1,103 @@
+<div class="container-fluid py-4">
+
+  <!-- Search Panel -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-primary text-white py-3">
+      <h4 class="mb-0"><i class="bi bi-search me-2"></i>Search Courses</h4>
+      <small>Browse and search available courses by technology or duration</small>
+    </div>
+    <div class="card-body p-4">
+      <div class="row g-3 align-items-end">
+
+        <!-- Text search -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Search Course / Technology</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control"
+                   placeholder="e.g. Angular, React, Python..."
+                   [(ngModel)]="searchTechnology">
+          </div>
+        </div>
+
+        <!-- Technology dropdown -->
+        <div class="col-md-3">
+          <label class="form-label fw-semibold">Select Technology</label>
+          <select class="form-select" [(ngModel)]="selectedTechnology">
+            <option value="">All Technologies</option>
+            @for (tech of technologies; track tech) {
+              <option [value]="tech">{{ tech }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Duration range -->
+        <div class="col-md-2">
+          <label class="form-label fw-semibold">Min Duration (hrs)</label>
+          <input type="number" class="form-control" placeholder="e.g. 10"
+                 [(ngModel)]="minDuration" min="0">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label fw-semibold">Max Duration (hrs)</label>
+          <input type="number" class="form-control" placeholder="e.g. 60"
+                 [(ngModel)]="maxDuration" min="0">
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-1 d-flex gap-2">
+          <button class="btn btn-primary w-100" (click)="onSearch()">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button class="btn btn-outline-secondary btn-sm" (click)="onReset()">
+          <i class="bi bi-arrow-counterclockwise me-1"></i>Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0 text-muted">
+      @if (hasSearched) {
+        Found <strong class="text-primary">{{ filteredCourses.length }}</strong> course(s)
+      } @else {
+        All Available Courses (<strong class="text-primary">{{ filteredCourses.length }}</strong>)
+      }
+    </h5>
+  </div>
+
+  @if (filteredCourses.length === 0) {
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-search fs-1 d-block mb-3"></i>
+      <h5>No courses found</h5>
+      <p>Try different search criteria or <button class="btn btn-link p-0" (click)="onReset()">view all courses</button></p>
+    </div>
+  } @else {
+    <div class="row g-4">
+      @for (course of filteredCourses; track course.id) {
+        <div class="col-md-6 col-xl-4">
+          <div class="card h-100 border-0 shadow-sm course-card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-primary rounded-pill">{{ course.technology }}</span>
+                <span class="text-muted small"><i class="bi bi-clock me-1"></i>{{ course.courseDuration }} hrs</span>
+              </div>
+              <h5 class="card-title fw-bold">{{ course.courseName }}</h5>
+              <p class="card-text text-muted small">{{ course.courseDescription | slice:0:150 }}...</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <a [href]="course.launchUrl" target="_blank" class="btn btn-outline-primary btn-sm w-100">
+                <i class="bi bi-play-circle-fill me-2"></i>Launch Course
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+</div>

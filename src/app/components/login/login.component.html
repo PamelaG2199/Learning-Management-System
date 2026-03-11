@@ -1,0 +1,66 @@
+<div class="auth-wrapper">
+  <div class="card shadow-lg auth-card">
+    <div class="card-header bg-primary text-white text-center py-4">
+      <h2 class="mb-0"><i class="bi bi-mortarboard-fill me-2"></i>LMS Portal</h2>
+      <small>Learning Management System</small>
+    </div>
+    <div class="card-body p-4">
+
+      @if (errorMessage) {
+        <div class="alert alert-danger d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+        </div>
+      }
+
+      <!-- Demo credentials hint -->
+      <div class="alert alert-info small py-2">
+        <strong>Demo:</strong> Admin: admin&#64;lms.com / Admin1234 &nbsp;|&nbsp; Lead: lead&#64;lms.com / Lead1234
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="email">
+            <i class="bi bi-envelope me-1"></i>Email Address <span class="text-danger">*</span>
+          </label>
+          <input id="email" type="email" class="form-control"
+                 formControlName="email" placeholder="Enter your email"
+                 [class.is-invalid]="email.invalid && email.touched">
+          @if (email.touched && email.errors?.['required']) {
+            <div class="invalid-feedback">Email is required.</div>
+          }
+          @if (email.touched && email.errors?.['email']) {
+            <div class="invalid-feedback">Enter a valid email address.</div>
+          }
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold" for="password">
+            <i class="bi bi-lock me-1"></i>Password <span class="text-danger">*</span>
+          </label>
+          <div class="input-group">
+            <input id="password" [type]="showPassword ? 'text' : 'password'"
+                   class="form-control" formControlName="password"
+                   placeholder="Enter your password"
+                   [class.is-invalid]="password.invalid && password.touched">
+            <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+              <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+            </button>
+            @if (password.touched && password.errors?.['required']) {
+              <div class="invalid-feedback">Password is required.</div>
+            }
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer text-center py-3">
+      <span>New to LMS? </span>
+      <a routerLink="/register" class="text-primary fw-semibold">Create an account</a>
+    </div>
+  </div>
+</div>

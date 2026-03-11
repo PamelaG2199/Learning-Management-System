@@ -1,0 +1,96 @@
+<div class="auth-wrapper">
+  <div class="card shadow-lg auth-card">
+    <div class="card-header bg-primary text-white text-center py-4">
+      <h2 class="mb-0"><i class="bi bi-person-plus-fill me-2"></i>Register to LMS</h2>
+      <small>Learning Management System</small>
+    </div>
+    <div class="card-body p-4">
+
+      @if (successMessage) {
+        <div class="alert alert-success d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2"></i>{{ successMessage }}
+        </div>
+      }
+      @if (errorMessage) {
+        <div class="alert alert-danger d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="username">
+            <i class="bi bi-person me-1"></i>User Name <span class="text-danger">*</span>
+          </label>
+          <input id="username" type="text" class="form-control"
+                 formControlName="username" placeholder="Enter your username"
+                 [class.is-invalid]="username.invalid && username.touched"
+                 [class.is-valid]="username.valid && username.touched">
+          @if (username.touched && username.errors?.['required']) {
+            <div class="invalid-feedback">Username is required.</div>
+          }
+          @if (username.touched && username.errors?.['minlength']) {
+            <div class="invalid-feedback">Username must be at least 3 characters.</div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="email">
+            <i class="bi bi-envelope me-1"></i>User Email Id <span class="text-danger">*</span>
+          </label>
+          <input id="email" type="email" class="form-control"
+                 formControlName="email" placeholder="example@domain.com"
+                 [class.is-invalid]="email.invalid && email.touched"
+                 [class.is-valid]="email.valid && email.touched">
+          @if (email.touched && email.errors?.['required']) {
+            <div class="invalid-feedback">Email is required.</div>
+          }
+          @if (email.touched && (email.errors?.['email'] || email.errors?.['emailDomain'])) {
+            <div class="invalid-feedback">Email must contain "&#64;" and ".com".</div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold" for="password">
+            <i class="bi bi-lock me-1"></i>Create Password <span class="text-danger">*</span>
+          </label>
+          <div class="input-group">
+            <input id="password" [type]="showPassword ? 'text' : 'password'"
+                   class="form-control" formControlName="password"
+                   placeholder="Min 8 alphanumeric characters"
+                   [class.is-invalid]="password.invalid && password.touched"
+                   [class.is-valid]="password.valid && password.touched">
+            <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+              <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+            </button>
+            @if (password.touched && password.errors?.['required']) {
+              <div class="invalid-feedback">Password is required.</div>
+            }
+            @if (password.touched && password.errors?.['minlength']) {
+              <div class="invalid-feedback">Password must be at least 8 characters.</div>
+            }
+            @if (password.touched && password.errors?.['alphanumeric']) {
+              <div class="invalid-feedback">Password must be alphanumeric (letters and numbers).</div>
+            }
+          </div>
+          <div class="form-text">Must be alphanumeric and at least 8 characters.</div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-person-check-fill me-2"></i>Register
+          </button>
+        </div>
+      </form>
+
+    </div>
+    <div class="card-footer text-center py-3">
+      <span>Already have an account? </span>
+      <a routerLink="/login" class="text-primary fw-semibold">Login here</a>
+    </div>
+  </div>
+</div>

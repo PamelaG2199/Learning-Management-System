@@ -1,0 +1,28 @@
+/* Global Styles */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+  background-color: #f4f6fb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.main-content {
+  min-height: calc(100vh - 56px);
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #0d6efd; border-radius: 3px; }
+

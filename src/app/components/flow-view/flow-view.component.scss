@@ -1,0 +1,23 @@
+.flow-steps {
+  .flow-step {
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    min-width: 140px;
+    text-align: center;
+
+    .step-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .step-desc {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+  }
+}
